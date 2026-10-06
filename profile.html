@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>প্রোফাইল — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="formula-page auth-page">
+
+<header class="auth-topbar">
+  <a class="pill-button" href="vault-dashboard.html" data-i18n="back_to_dashboard">← ড্যাশবোর্ড</a>
+</header>
+
+<main class="auth-shell">
+  <div class="auth-card" id="profileMain" hidden>
+    <h1 data-i18n="profile_title">প্রোফাইল</h1>
+    <p class="auth-subtitle" data-i18n="profile_subtitle">আপনার তথ্য ও গোপনীয়তা সেটিংস</p>
+
+    <div class="form-alert" id="profileAlert" role="alert" hidden></div>
+
+    <form class="auth-form" id="profileForm" novalidate>
+      <div class="form-field">
+        <label for="displayNameInput" data-i18n="display_name_label">প্রদর্শিত নাম</label>
+        <input type="text" id="displayNameInput" required />
+        <span class="field-message" id="displayNameMessage"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="usernameReadonly" data-i18n="username_readonly_label">ইউজারনেম</label>
+        <input type="text" id="usernameReadonly" disabled />
+      </div>
+
+      <div class="form-field">
+        <label for="emailReadonly" data-i18n="email_readonly_label">ইমেইল</label>
+        <input type="text" id="emailReadonly" disabled />
+      </div>
+
+      <p class="form-field new-dialog-section-label">
+        <label data-i18n="privacy_settings_title">গোপনীয়তা</label>
+      </p>
+
+      <label class="pick-row">
+        <input type="checkbox" id="showStatusToggle" />
+        <span class="pick-row-name" data-i18n="show_status_label">অনলাইন স্ট্যাটাস দেখান</span>
+      </label>
+
+      <label class="pick-row">
+        <input type="checkbox" id="showLastSeenToggle" />
+        <span class="pick-row-name" data-i18n="show_last_seen_label">সর্বশেষ সক্রিয়তার সময় দেখান</span>
+      </label>
+
+      <button type="submit" class="btn-primary auth-submit" id="saveProfileButton" data-i18n="save_changes_button">পরিবর্তন সংরক্ষণ করুন</button>
+    </form>
+  </div>
+</main>
+
+<script type="module" src="js/profile.js"></script>
+</body>
+</html>

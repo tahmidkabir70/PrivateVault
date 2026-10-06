@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>চ্যাট রুম — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/chat.css" />
+</head>
+<body class="chat-room-page">
+
+<header class="chat-room-topbar">
+  <a class="back-link" href="chat.html" data-i18n="back_to_chats">← চ্যাট তালিকা</a>
+  <div class="chat-room-heading">
+    <h1 id="chatRoomTitle">…</h1>
+    <span id="chatRoomSubtitle"></span>
+  </div>
+  <button type="button" class="pill-button" id="chatOptionsButton" data-i18n-aria-label="group_settings_button" hidden>⋯</button>
+</header>
+
+<div class="header-options-popover" id="headerOptionsPopover" role="menu" hidden></div>
+
+<!-- Group settings dialog -->
+<div class="pv-dialog-backdrop" id="groupSettingsDialog" role="dialog" aria-modal="true" aria-labelledby="groupSettingsTitle" hidden>
+  <div class="pv-dialog">
+    <h2 id="groupSettingsTitle" data-i18n="group_settings_title">গ্রুপ সেটিংস</h2>
+    <p class="form-field new-dialog-section-label">
+      <label data-i18n="group_members_label">সদস্যরা</label>
+    </p>
+    <ul class="pick-list" id="groupMembersList"></ul>
+
+    <div id="groupAddMemberSection">
+      <p class="form-field new-dialog-section-label">
+        <label data-i18n="add_member_button">সদস্য যোগ করুন</label>
+      </p>
+      <ul class="pick-list" id="groupAddMemberList"></ul>
+      <p class="new-dialog-empty" id="groupAddMemberEmpty" data-i18n="no_more_friends_to_add" hidden></p>
+      <span class="field-message" id="groupSettingsErrorMessage"></span>
+    </div>
+
+    <div class="pv-dialog-actions dialog-actions-split">
+      <button type="button" class="btn-secondary" id="leaveGroupButton" data-i18n="leave_group_button">গ্রুপ ত্যাগ করুন</button>
+      <button type="button" class="btn-secondary" id="closeGroupSettingsButton" data-i18n="help_close">বন্ধ করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- Report dialog -->
+<div class="pv-dialog-backdrop" id="reportDialog" role="dialog" aria-modal="true" aria-labelledby="reportDialogTitle" hidden>
+  <div class="pv-dialog">
+    <h2 id="reportDialogTitle" data-i18n="report_dialog_title">রিপোর্ট করুন</h2>
+    <form id="reportForm">
+      <div class="form-field">
+        <label for="reportReasonInput" data-i18n="report_reason_label">কারণ লিখুন</label>
+        <textarea id="reportReasonInput" rows="3" data-i18n-placeholder="report_reason_placeholder"></textarea>
+      </div>
+      <div class="pv-dialog-actions dialog-actions-split">
+        <button type="button" class="btn-secondary" id="closeReportDialogButton" data-i18n="cancel_button">বাতিল</button>
+        <button type="submit" class="btn-primary" id="submitReportButton" data-i18n="submit_report_button">জমা দিন</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="messages-scroll" id="messagesScroll">
+  <p class="messages-status" id="messagesStatus" data-i18n="messages_loading">বার্তা লোড হচ্ছে...</p>
+</div>
+
+<p class="typing-indicator" id="typingIndicator" hidden></p>
+
+<div class="reply-banner" id="replyBanner" hidden>
+  <div class="reply-banner-text">
+    <strong id="replyBannerSender"></strong>
+    <span id="replyBannerPreview"></span>
+  </div>
+  <button type="button" class="reply-banner-close" id="replyBannerClose" aria-label="Cancel reply">✕</button>
+</div>
+
+<form class="composer" id="composerForm">
+  <input type="file" id="attachmentInput" class="sr-only" aria-hidden="true" tabindex="-1" />
+  <div class="composer-toolbar">
+    <button type="button" class="composer-icon-btn" id="emojiButton" data-i18n-aria-label="emoji_button" aria-haspopup="true" aria-expanded="false">😀</button>
+    <button type="button" class="composer-icon-btn" id="attachButton" data-i18n-aria-label="attach_button">📎</button>
+    <button type="button" class="composer-icon-btn" id="gifButton" data-i18n-aria-label="gif_button">GIF</button>
+  </div>
+  <label for="messageInput" class="sr-only">Message</label>
+  <textarea
+    id="messageInput"
+    rows="1"
+    data-i18n-placeholder="type_message_placeholder"
+  ></textarea>
+  <button type="submit" class="btn-primary" id="sendButton" data-i18n="send_button">পাঠান</button>
+</form>
+
+<div class="upload-progress-bar" id="uploadProgressBar" hidden>
+  <div class="upload-progress-fill" id="uploadProgressFill"></div>
+  <span id="uploadProgressLabel" data-i18n="uploading_label">আপলোড হচ্ছে...</span>
+</div>
+
+<!-- Emoji picker popover -->
+<div class="emoji-popover" id="emojiPopover" role="menu" hidden></div>
+
+<!-- GIF search dialog -->
+<div class="pv-dialog-backdrop" id="gifDialog" role="dialog" aria-modal="true" aria-labelledby="gifDialogTitle" hidden>
+  <div class="pv-dialog gif-dialog">
+    <h2 id="gifDialogTitle" data-i18n="gif_dialog_title">GIF খুঁজুন</h2>
+    <form class="gif-search-form" id="gifSearchForm">
+      <label for="gifSearchInput" class="sr-only">Search GIFs</label>
+      <input type="search" id="gifSearchInput" data-i18n-placeholder="gif_search_placeholder" />
+      <button type="submit" class="btn-primary" data-i18n="gif_search_button">খুঁজুন</button>
+    </form>
+    <div class="gif-results" id="gifResults">
+      <p class="messages-status" id="gifStatus" data-i18n="gif_type_to_search"></p>
+    </div>
+    <div class="pv-dialog-actions">
+      <button type="button" class="btn-secondary" id="gifDialogCloseButton" data-i18n="cancel_button">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/chat-room.js"></script>
+
+<!-- View profile dialog (direct chats) -->
+<div class="pv-dialog-backdrop" id="viewProfileDialog" role="dialog" aria-modal="true" aria-labelledby="viewProfileTitle" hidden>
+  <div class="pv-dialog">
+    <h2 id="viewProfileTitle"></h2>
+    <p id="viewProfileUsername" class="auth-subtitle"></p>
+    <p id="viewProfileStatus" class="auth-subtitle"></p>
+    <div class="pv-dialog-actions">
+      <button type="button" class="btn-primary" id="closeViewProfileButton" data-i18n="help_close">বন্ধ করুন</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- PWA Theme -->
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Existing Theme -->
+  <script src="js/theme.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <title>Formula Sheet — বীজগণিতের সূত্রাবলি</title>
+
+  <meta
+    name="description"
+    content="বীজগণিতের মৌলিক সূত্রাবলি — স্পর্শ করে ব্যাখ্যা দেখুন।"
+  />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body class="formula-page">
+
+<header class="formula-topbar">
+
+  <span class="app-mark" data-i18n="app_name">
+    Formula Sheet
+  </span>
+
+  <div class="topbar-actions">
+
+    <button
+      type="button"
+      class="pill-button"
+      id="langToggle"
+      aria-label="ভাষা পরিবর্তন করুন"
+    >
+      <span data-i18n="lang_toggle">
+        🌐 বাংলা | English
+      </span>
+    </button>
+
+    <button
+      type="button"
+      class="pill-button"
+      id="helpButton"
+      aria-haspopup="dialog"
+      aria-controls="helpDialog"
+    >
+      <span data-i18n="help_button">
+        সাহায্য
+      </span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <section class="formula-hero">
+
+    <h1 data-i18n="formula_page_title">
+      বীজগণিতের সূত্রাবলি
+    </h1>
+
+    <p data-i18n="formula_page_subtitle">
+      স্পর্শ করে প্রতিটি সূত্রের ব্যাখ্যা দেখুন
+    </p>
+
+  </section>
+
+
+  <section
+    class="formula-grid"
+    id="formulaGrid"
+    aria-label="সূত্রের তালিকা"
+  >
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="sum_sq"
+      aria-expanded="false"
+    >
+      <span class="formula-expr">
+        (a + b)²
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+        <div class="formula-detail-inner">
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+        </div>
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="diff_sq"
+      aria-expanded="false"
+    >
+      <span class="formula-expr">
+        (a − b)²
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+        <div class="formula-detail-inner">
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+        </div>
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="sum_cube"
+      aria-expanded="false"
+    >
+      <span class="formula-expr">
+        (a + b)³
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+        <div class="formula-detail-inner">
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+        </div>
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="diff_cube"
+      aria-expanded="false"
+    >
+      <span class="formula-expr">
+        (a − b)³
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+        <div class="formula-detail-inner">
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+        </div>
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="sum_of_sq"
+      aria-expanded="false"
+    >
+      <span class="formula-expr">
+        a² + b²
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+        <div class="formula-detail-inner">
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+        </div>
+      </div>
+
+    </button>
+
+
+    <!-- Easter Egg Formula -->
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="diff_of_sq"
+      aria-expanded="false"
+    >
+
+      <span class="formula-expr">
+        a² − b²
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+
+        <div class="formula-detail-inner">
+
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+
+        </div>
+
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="sum_cubes"
+      aria-expanded="false"
+    >
+
+      <span class="formula-expr">
+        a³ + b³
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+
+        <div class="formula-detail-inner">
+
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+
+        </div>
+
+      </div>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="formula-card"
+      data-formula-id="diff_cubes"
+      aria-expanded="false"
+    >
+
+      <span class="formula-expr">
+        a³ − b³
+      </span>
+
+      <span
+        class="formula-tap-hint"
+        data-i18n="tap_hint"
+      >
+        ব্যাখ্যার জন্য স্পর্শ করুন
+      </span>
+
+      <div class="formula-detail">
+
+        <div class="formula-detail-inner">
+
+          <p class="formula-expansion"></p>
+          <p class="formula-explain"></p>
+
+        </div>
+
+      </div>
+
+    </button>
+
+  </section>
+
+
+  <section class="formula-hint">
+
+    <div class="formula-hint-card">
+
+      <h2 data-i18n="formula_hint_title">
+        🧩 সূত্রের ইঙ্গিত
+      </h2>
+
+      <p
+        data-i18n="formula_hint_body"
+        data-multiline="true"
+      ></p>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer class="formula-footer">
+
+  <span>
+    &copy;
+    <span id="pvYear"></span>
+    Private Vault
+  </span>
+
+</footer>
+
+
+<!-- Help Modal -->
+
+<div
+  class="pv-dialog-backdrop"
+  id="helpDialog"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="helpDialogTitle"
+  hidden
+>
+
+  <div class="pv-dialog">
+
+    <h2
+      id="helpDialogTitle"
+      data-i18n="help_modal_title"
+    >
+      কীভাবে ব্যবহার করবেন
+    </h2>
+
+    <p data-i18n="help_modal_body"></p>
+
+    <div class="pv-dialog-actions">
+
+      <button
+        type="button"
+        class="btn-primary"
+        id="helpCloseButton"
+        data-i18n="help_close"
+      >
+        বন্ধ করুন
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Existing Formula Sheet JavaScript -->
+<script
+  type="module"
+  src="js/cover.js"
+></script>
+
+
+<!-- PWA Service Worker Registration -->
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(function (registration) {
+
+          console.log(
+            "Formula Sheet Service Worker registered:",
+            registration.scope
+          );
+
+        })
+        .catch(function (error) {
+
+          console.error(
+            "Service Worker registration failed:",
+            error
+          );
+
+        });
+
+    });
+  }
+</script>
+
+</body>
+</html>

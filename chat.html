@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>চ্যাট — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/chat.css" />
+</head>
+<body class="formula-page chat-page">
+
+<header class="chat-topbar">
+  <a class="pill-button" href="vault-dashboard.html" data-i18n="back_to_dashboard">← ড্যাশবোর্ড</a>
+  <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+  <button type="button" class="pill-button" id="newChatButton" data-i18n="new_chat_button">+ নতুন</button>
+</header>
+
+<main class="chat-list-main" id="chatListMain" hidden>
+  <h1 data-i18n="chat_title">চ্যাট</h1>
+  <p class="chat-list-subtitle" data-i18n="chat_subtitle">আপনার কথোপকথন</p>
+
+  <ul class="chat-list" id="chatListEl" hidden></ul>
+
+  <div class="chat-list-empty" id="chatListEmpty" hidden>
+    <p data-i18n="chat_list_empty">এখনো কোনো কথোপকথন নেই।</p>
+  </div>
+</main>
+
+<!-- New conversation dialog -->
+<div class="pv-dialog-backdrop" id="newDialog" role="dialog" aria-modal="true" aria-labelledby="newDialogTitle" hidden>
+  <div class="pv-dialog">
+    <h2 id="newDialogTitle" data-i18n="new_dialog_title">নতুন কথোপকথন</h2>
+
+    <div class="new-dialog-tabs" role="tablist">
+      <button type="button" class="new-dialog-tab" id="tabDirect" role="tab" aria-selected="true" data-i18n="new_dialog_tab_direct">ডাইরেক্ট</button>
+      <button type="button" class="new-dialog-tab" id="tabGroup" role="tab" aria-selected="false" data-i18n="new_dialog_tab_group">গ্রুপ</button>
+    </div>
+
+    <div id="panelDirect">
+      <ul class="pick-list" id="directFriendList"></ul>
+      <p class="new-dialog-empty" id="directEmpty" data-i18n="new_dialog_no_friends" hidden></p>
+      <span class="field-message" id="directErrorMessage"></span>
+    </div>
+
+    <div id="panelGroup" hidden>
+      <div class="form-field">
+        <label for="groupNameInput" data-i18n="group_name_label">গ্রুপের নাম</label>
+        <input type="text" id="groupNameInput" data-i18n-placeholder="group_name_placeholder" />
+        <span class="field-message" id="groupNameMessage"></span>
+      </div>
+      <p class="form-field new-dialog-section-label">
+        <label data-i18n="group_select_members">সদস্য নির্বাচন করুন</label>
+      </p>
+      <ul class="pick-list" id="groupFriendList"></ul>
+      <p class="new-dialog-empty" id="groupEmpty" data-i18n="new_dialog_no_friends" hidden></p>
+      <span class="field-message" id="groupMembersMessage"></span>
+      <div class="pv-dialog-actions dialog-actions-split">
+        <button type="button" class="btn-secondary" id="groupCancelButton" data-i18n="cancel_button">বাতিল</button>
+        <button type="button" class="btn-primary" id="createGroupButton" data-i18n="create_group_button">গ্রুপ তৈরি করুন</button>
+      </div>
+    </div>
+
+    <div class="pv-dialog-actions" id="directDialogActions">
+      <button type="button" class="btn-secondary" id="closeDialogButton" data-i18n="cancel_button">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/chat.js"></script>
+</body>
+</html>

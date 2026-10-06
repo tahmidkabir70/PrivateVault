@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>ভল্ট — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="formula-page auth-page">
+
+<header class="auth-topbar">
+  <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+</header>
+
+<main class="auth-shell">
+  <div class="auth-card" id="vaultCard" hidden>
+    <h1 id="vaultTitle">ভল্ট</h1>
+    <p class="auth-subtitle" id="vaultSubtitle"></p>
+
+    <div class="form-alert" id="formAlert" role="alert" hidden></div>
+
+    <form class="auth-form" id="vaultForm" novalidate>
+      <div class="form-field">
+        <label for="vaultPassword" data-i18n="vault_password_label">ভল্ট পাসওয়ার্ড</label>
+        <div class="field-row">
+          <input
+            type="password"
+            id="vaultPassword"
+            name="vaultPassword"
+            autocomplete="off"
+            data-i18n-placeholder="password_placeholder"
+            required
+          />
+          <button type="button" class="password-toggle" id="toggleVaultPassword" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
+        </div>
+        <span class="field-message" id="vaultPasswordMessage"></span>
+      </div>
+
+      <div class="form-field" id="vaultConfirmField" hidden>
+        <label for="vaultConfirmPassword" data-i18n="vault_confirm_label">ভল্ট পাসওয়ার্ড নিশ্চিত করুন</label>
+        <div class="field-row">
+          <input
+            type="password"
+            id="vaultConfirmPassword"
+            name="vaultConfirmPassword"
+            autocomplete="off"
+            data-i18n-placeholder="password_placeholder"
+          />
+          <button type="button" class="password-toggle" id="toggleVaultConfirmPassword" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
+        </div>
+        <span class="field-message" id="vaultConfirmMessage"></span>
+      </div>
+
+      <button type="submit" class="btn-primary auth-submit" id="submitButton">
+        <span class="auth-spinner" id="submitSpinner" hidden></span>
+        <span id="submitLabel"></span>
+      </button>
+    </form>
+  </div>
+</main>
+
+<script type="module" src="js/vault.js"></script>
+</body>
+</html>

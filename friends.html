@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>বন্ধুরা — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/friends.css" />
+</head>
+<body class="formula-page friends-page">
+
+<header class="friends-topbar">
+  <a class="pill-button" href="vault-dashboard.html" data-i18n="back_to_dashboard">← ড্যাশবোর্ড</a>
+  <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+</header>
+
+<main class="friends-main" id="friendsMain" hidden>
+  <h1 data-i18n="friends_title">বন্ধুরা</h1>
+  <p class="friends-subtitle" data-i18n="friends_subtitle">ইউজারনেম দিয়ে খুঁজুন এবং অনুরোধ পাঠান</p>
+
+  <form class="friends-search" id="searchForm">
+    <label for="searchInput" class="sr-only">Search</label>
+    <input
+      type="text"
+      id="searchInput"
+      autocomplete="off"
+      data-i18n-placeholder="friends_search_placeholder"
+    />
+    <button type="submit" class="btn-primary" data-i18n="friends_search_button">খুঁজুন</button>
+  </form>
+
+  <p class="friends-status-line" id="searchStatus"></p>
+  <ul class="friend-list" id="searchResultsList" hidden></ul>
+
+  <div id="tabsSection">
+    <div class="friends-tabs" role="tablist">
+      <button type="button" class="friends-tab" id="tabAll" role="tab" aria-selected="true" data-i18n="friends_tab_all">বন্ধু তালিকা</button>
+      <button type="button" class="friends-tab" id="tabRequests" role="tab" aria-selected="false" data-i18n="friends_tab_requests">অনুরোধ</button>
+    </div>
+
+    <div class="friends-panel" id="panelAll" role="tabpanel">
+      <ul class="friend-list" id="friendListEl"></ul>
+      <p class="friends-empty" id="friendListEmpty" data-i18n="friends_empty_list" hidden>এখনো কোনো বন্ধু নেই।</p>
+    </div>
+
+    <div class="friends-panel" id="panelRequests" role="tabpanel" hidden>
+      <div class="request-section">
+        <h2 data-i18n="incoming_requests_title">আগত অনুরোধ</h2>
+        <ul class="friend-list" id="incomingListEl"></ul>
+        <p class="friends-empty" id="incomingEmpty" data-i18n="no_incoming_requests" hidden>কোনো আগত অনুরোধ নেই।</p>
+      </div>
+      <div class="request-section">
+        <h2 data-i18n="sent_requests_title">পাঠানো অনুরোধ</h2>
+        <ul class="friend-list" id="sentListEl"></ul>
+        <p class="friends-empty" id="sentEmpty" data-i18n="no_sent_requests" hidden>কোনো পাঠানো অনুরোধ নেই।</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="js/friends.js"></script>
+</body>
+</html>

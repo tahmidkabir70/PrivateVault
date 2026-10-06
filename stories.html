@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <script src="js/theme.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>স্টোরিজ — প্রাইভেট ভল্ট</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/stories.css" />
+</head>
+
+<body class="formula-page stories-page">
+  
+  <header class="stories-topbar">
+    <a class="pill-button" href="vault-dashboard.html" data-i18n="back_to_dashboard">← ড্যাশবোর্ড</a>
+    <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+    <button type="button" class="pill-button" id="addStoryButton" data-i18n="add_story_button">+ নতুন স্টোরি</button>
+  </header>
+  
+  <main class="stories-main" id="storiesMain" hidden>
+    <h1 data-i18n="stories_title">স্টোরিজ</h1>
+    <p class="stories-subtitle" data-i18n="stories_subtitle">আপনার বন্ধুদের ২৪-ঘণ্টার আপডেট</p>
+    
+    <div class="stories-grid" id="storiesGrid">
+      <p class="stories-empty" id="storiesEmpty" data-i18n="stories_empty" hidden>কোনো স্টোরি নেই।</p>
+    </div>
+  </main>
+  
+  <!-- Story viewer dialog -->
+  <div class="pv-dialog-backdrop" id="storyViewer" role="dialog" aria-modal="true" aria-labelledby="storyViewerTitle" hidden>
+    <div class="story-viewer">
+      <button type="button" class="story-viewer-close" id="storyViewerClose" aria-label="Close">✕</button>
+      <div class="story-viewer-content" id="storyViewerContent">
+        <div class="story-viewer-progress" id="storyViewerProgress"></div>
+        <div class="story-viewer-media" id="storyViewerMedia"></div>
+        <button type="button" class="story-viewer-nav story-viewer-prev" id="storyViewerPrev">‹</button>
+        <button type="button" class="story-viewer-nav story-viewer-next" id="storyViewerNext">›</button>
+        <div class="story-viewer-meta" id="storyViewerMeta"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add story dialog -->
+  <div class="pv-dialog-backdrop" id="addStoryDialog" role="dialog" aria-modal="true" aria-labelledby="addStoryTitle" hidden>
+    <div class="pv-dialog">
+      <h2 id="addStoryTitle" data-i18n="add_story_title">নতুন স্টোরি যোগ করুন</h2>
+      <p class="auth-subtitle" data-i18n="add_story_subtitle">একটি ইমেজ বা শর্ট ভিডিও আপলোড করুন</p>
+      
+      <div class="form-alert" id="storyAlert" role="alert" hidden></div>
+      
+      <form class="auth-form" id="addStoryForm">
+        <div class="form-field">
+          <label for="storyFileInput" data-i18n="story_file_label">ফাইল নির্বাচন করুন</label>
+          <input type="file" id="storyFileInput" accept="image/*,video/*" required />
+          <span class="field-message" id="storyFileMessage"></span>
+        </div>
+        
+        <div class="upload-progress-bar" id="storyUploadProgress" hidden>
+          <div class="upload-progress-fill" id="storyUploadFill"></div>
+          <span id="storyUploadLabel" data-i18n="uploading_label">আপলোড হচ্ছে...</span>
+        </div>
+        
+        <div class="pv-dialog-actions dialog-actions-split">
+          <button type="button" class="btn-secondary" id="closeAddStoryButton" data-i18n="cancel_button">বাতিল</button>
+          <button type="submit" class="btn-primary" id="submitStoryButton" data-i18n="add_story_button">পোস্ট করুন</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script type="module" src="js/stories.js"></script>
+</body>
+
+</html>

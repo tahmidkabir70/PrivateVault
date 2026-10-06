@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>প্রবেশ করুন — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="formula-page auth-page">
+
+<header class="auth-topbar">
+  <a class="app-mark" href="index.html" data-i18n="app_name">প্রাইভেট ভল্ট</a>
+</header>
+
+<main class="auth-shell">
+  <div class="auth-card">
+    <h1 data-i18n="login_title">প্রবেশ করুন</h1>
+    <p class="auth-subtitle" data-i18n="login_subtitle">আপনার ভল্টে ফিরে স্বাগতম</p>
+
+    <div class="form-alert" id="formAlert" role="alert" hidden></div>
+
+    <form class="auth-form" id="loginForm" novalidate>
+      <div class="form-field">
+        <label for="email" data-i18n="email_label">ইমেইল</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          inputmode="email"
+          data-i18n-placeholder="email_placeholder"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="password" data-i18n="password_label">পাসওয়ার্ড</label>
+        <div class="field-row">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="current-password"
+            data-i18n-placeholder="password_placeholder"
+            required
+          />
+          <button type="button" class="password-toggle" id="togglePassword" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary auth-submit" id="submitButton">
+        <span class="auth-spinner" id="submitSpinner" hidden></span>
+        <span id="submitLabel" data-i18n="login_button">প্রবেশ করুন</span>
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      <button type="button" class="link-button" id="forgotPasswordButton" data-i18n="forgot_password">পাসওয়ার্ড ভুলে গেছেন?</button>
+    </p>
+
+    <p class="auth-switch">
+      <span data-i18n="no_account_text">অ্যাকাউন্ট নেই?</span>
+      <a href="signup.html" data-i18n="go_to_signup">নিবন্ধন করুন</a>
+    </p>
+  </div>
+</main>
+
+<script type="module" src="js/login.js"></script>
+</body>
+</html>

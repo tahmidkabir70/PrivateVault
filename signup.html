@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>নিবন্ধন করুন — প্রাইভেট ভল্ট</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="formula-page auth-page">
+
+<header class="auth-topbar">
+  <a class="app-mark" href="index.html" data-i18n="app_name">প্রাইভেট ভল্ট</a>
+</header>
+
+<main class="auth-shell">
+  <div class="auth-card">
+    <h1 data-i18n="signup_title">নিবন্ধন করুন</h1>
+    <p class="auth-subtitle" data-i18n="signup_subtitle">আপনার প্রাইভেট ভল্ট তৈরি করুন</p>
+
+    <div class="form-alert" id="formAlert" role="alert" hidden></div>
+
+    <form class="auth-form" id="signupForm" novalidate>
+      <div class="form-field">
+        <label for="displayName" data-i18n="display_name_label">প্রদর্শিত নাম</label>
+        <input
+          type="text"
+          id="displayName"
+          name="displayName"
+          autocomplete="name"
+          data-i18n-placeholder="display_name_placeholder"
+          required
+        />
+        <span class="field-message" id="displayNameMessage"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="username" data-i18n="username_label">ইউজারনেম</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          autocomplete="username"
+          data-i18n-placeholder="username_placeholder"
+          required
+        />
+        <span class="field-message" id="usernameMessage"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="email" data-i18n="email_label">ইমেইল</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          autocomplete="email"
+          inputmode="email"
+          data-i18n-placeholder="email_placeholder"
+          required
+        />
+        <span class="field-message" id="emailMessage"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="password" data-i18n="password_label">পাসওয়ার্ড</label>
+        <div class="field-row">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="new-password"
+            data-i18n-placeholder="password_placeholder"
+            required
+          />
+          <button type="button" class="password-toggle" id="togglePassword" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
+        </div>
+        <span class="field-message" id="passwordMessage"></span>
+      </div>
+
+      <div class="form-field">
+        <label for="confirmPassword" data-i18n="confirm_password_label">পাসওয়ার্ড নিশ্চিত করুন</label>
+        <div class="field-row">
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            autocomplete="new-password"
+            data-i18n-placeholder="password_placeholder"
+            required
+          />
+          <button type="button" class="password-toggle" id="toggleConfirmPassword" aria-label="পাসওয়ার্ড দেখান" aria-pressed="false">👁️</button>
+        </div>
+        <span class="field-message" id="confirmPasswordMessage"></span>
+      </div>
+
+      <button type="submit" class="btn-primary auth-submit" id="submitButton">
+        <span class="auth-spinner" id="submitSpinner" hidden></span>
+        <span id="submitLabel" data-i18n="signup_button">অ্যাকাউন্ট তৈরি করুন</span>
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      <span data-i18n="have_account_text">ইতিমধ্যে অ্যাকাউন্ট আছে?</span>
+      <a href="login.html" data-i18n="go_to_login">প্রবেশ করুন</a>
+    </p>
+  </div>
+</main>
+
+<script type="module" src="js/signup.js"></script>
+</body>
+</html>

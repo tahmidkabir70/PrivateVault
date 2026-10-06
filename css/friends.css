@@ -1,0 +1,153 @@
+/* ===== Private Vault — friends.css =====
+   Styling for friends.html: search, tabs, friend list, and requests. */
+
+.friends-page { min-height: 100vh; }
+
+.friends-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 18px 20px 0;
+}
+
+.friends-main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+.friends-main h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.friends-subtitle {
+  color: var(--paper-dim);
+  font-size: 0.9rem;
+  margin: 0 0 24px;
+}
+
+.friends-search {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.friends-search input {
+  flex: 1;
+  background: var(--ink-900);
+  border: 1px solid var(--ink-line-strong);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--paper);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.friends-search input:focus-visible { border-color: var(--gold); }
+
+.friends-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--ink-line);
+  margin-bottom: 18px;
+}
+
+.friends-tab {
+  background: transparent;
+  border: none;
+  color: var(--paper-dim);
+  padding: 10px 4px;
+  font-size: 0.92rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.friends-tab[aria-selected="true"] {
+  color: var(--paper);
+  border-bottom-color: var(--gold);
+}
+
+.friends-panel[hidden] { display: none; }
+
+.friend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--ink-900);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.friend-info h3 {
+  margin: 0 0 2px;
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.friend-info span {
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+}
+
+.friend-row .btn-primary,
+.friend-row .btn-secondary {
+  white-space: nowrap;
+  font-size: 0.82rem;
+  padding: 8px 14px;
+}
+
+.friend-badge {
+  font-size: 0.82rem;
+  color: var(--teal);
+  white-space: nowrap;
+}
+
+.friends-empty {
+  color: var(--paper-faint);
+  font-size: 0.88rem;
+  padding: 20px 4px;
+  text-align: center;
+}
+
+.request-section {
+  margin-bottom: 22px;
+}
+
+.request-section h2 {
+  font-size: 0.88rem;
+  color: var(--paper-dim);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.friends-status-line {
+  font-size: 0.84rem;
+  color: var(--paper-faint);
+  min-height: 1.2em;
+  margin: 0 0 14px;
+}
+
+.friends-status-line.is-error { color: var(--rose); }
+
+.inline-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}

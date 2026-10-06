@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <script src="js/theme.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>নোটিফিকেশন — প্রাইভেট ভল্ট</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/notifications.css" />
+</head>
+
+<body class="formula-page notifications-page">
+  
+  <header class="notifications-topbar">
+    <a class="pill-button" href="vault-dashboard.html" data-i18n="back_to_dashboard">← ড্যাশবোর্ড</a>
+    <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+    <button type="button" class="pill-button" id="markAllReadButton" data-i18n="mark_all_read_button">সব পড়া হয়েছে</button>
+  </header>
+  
+  <main class="notifications-main" id="notificationsMain" hidden>
+    <h1 data-i18n="notifications_title">নোটিফিকেশন</h1>
+    <p class="notifications-subtitle" data-i18n="notifications_subtitle">আপনার সাম্প্রতিক কার্যকলাপ</p>
+    
+    <div class="notifications-list" id="notificationsList">
+      <p class="notifications-empty" id="notificationsEmpty" data-i18n="notifications_empty" hidden>কোনো নোটিফিকেশন নেই।</p>
+    </div>
+  </main>
+  
+  <script type="module" src="js/notifications.js"></script>
+</body>
+
+</html>

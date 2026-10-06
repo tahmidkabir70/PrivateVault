@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+  <script src="js/theme.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ড্যাশবোর্ড — প্রাইভেট ভল্ট</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Noto+Serif+Bengali:wght@500;600&family=Inter:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="formula-page dashboard-page">
+  
+  <header class="dashboard-topbar">
+    <span class="app-mark" data-i18n="app_name">প্রাইভেট ভল্ট</span>
+    <div class="dashboard-topbar-actions">
+      <a href="notifications.html" class="status-pill status-pill-link" aria-label="Notifications">
+        <span aria-hidden="true">🔔</span>
+        <span id="notificationBadge" class="notification-badge" hidden>0</span>
+      </a>
+      <span class="status-pill" id="statusPill" aria-live="polite"></span>
+    </div>
+  </header>
+  
+  <main class="dashboard-main" id="dashboardMain" hidden>
+    <h1 class="dashboard-greeting"><span data-i18n="dashboard_greeting">স্বাগতম</span>, <span id="greetingName"></span></h1>
+    <p class="dashboard-username" id="usernameLine"></p>
+    
+    <nav class="nav-grid" aria-label="ড্যাশবোর্ড নেভিগেশন">
+      <a class="nav-card" href="friends.html">
+        <h2 data-i18n="dashboard_nav_friends">বন্ধুরা</h2>
+        <p data-i18n="dashboard_nav_friends_desc">বন্ধু খুঁজুন ও অনুরোধ পরিচালনা করুন</p>
+      </a>
+      
+      <a class="nav-card" href="chat.html">
+        <h2 data-i18n="dashboard_nav_chats">চ্যাট</h2>
+        <p data-i18n="dashboard_nav_chats_desc">কথোপকথন শুরু করুন বা চালিয়ে যান</p>
+      </a>
+      
+      <a class="nav-card" href="notifications.html">
+        <h2 data-i18n="dashboard_nav_notifications">নোটিফিকেশন</h2>
+        <p data-i18n="dashboard_nav_notifications_desc">সব নোটিফিকেশন দেখুন</p>
+      </a>
+      
+      <a class="nav-card" href="stories.html">
+        <h2 data-i18n="dashboard_nav_stories">স্টোরিজ</h2>
+        <p data-i18n="dashboard_nav_stories_desc">বন্ধুদের ২৪-ঘণ্টার আপডেট</p>
+      </a>
+      
+      <a class="nav-card" href="profile.html">
+        <h2 data-i18n="dashboard_nav_profile">প্রোফাইল</h2>
+        <p data-i18n="dashboard_nav_profile_desc">তথ্য ও গোপনীয়তা সেটিংস পরিচালনা করুন</p>
+      </a>
+    </nav>
+    
+    <div class="dashboard-actions">
+      <button type="button" class="btn-secondary" id="lockVaultButton" data-i18n="lock_vault_button">ভল্ট লক করুন</button>
+      <button type="button" class="btn-secondary" id="signOutButton" data-i18n="sign_out_button">সাইন আউট</button>
+    </div>
+  </main>
+  
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>

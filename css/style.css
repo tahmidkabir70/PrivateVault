@@ -1,0 +1,562 @@
+/* ===== Private Vault — style.css =====
+   Global design tokens + Formula Reference (landing) page styles.
+   Mobile-first. No inline styles are used anywhere in the HTML;
+   all presentation lives here and in the page-specific stylesheets. */
+
+:root {
+  /* ---- Color tokens: midnight-violet base, lilac / pink / cyan accents ---- */
+  --ink-950: #0a0713;
+  --ink-900: #120d20;
+  --ink-850: #1a1330;
+  --ink-line: rgba(255, 255, 255, 0.10);
+  --ink-line-strong: rgba(255, 255, 255, 0.22);
+  --paper: #f4efff;
+  --paper-dim: rgba(244, 239, 255, 0.68);
+  --paper-faint: rgba(244, 239, 255, 0.42);
+  --gold: #b69cff;
+  --gold-soft: rgba(182, 156, 255, 0.18);
+  --gold-strong: #d4c4ff;
+  --teal: #5ee7ff;
+  --teal-soft: rgba(94, 231, 255, 0.16);
+  --rose: #ff6b9d;
+  --rose-soft: rgba(255, 107, 157, 0.16);
+
+  /* ---- Aurora glows (used by the page background) ---- */
+  --glow-a: rgba(150, 110, 255, 0.28);
+  --glow-b: rgba(255, 107, 157, 0.26);
+  --glow-c: rgba(94, 231, 255, 0.20);
+
+  /* ---- Type tokens ---- */
+  --font-display: "Fraunces", "Noto Serif Bengali", "Noto Serif", serif;
+  --font-body: "Inter", "Noto Sans Bengali", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Noto Sans Bengali", ui-monospace, monospace;
+
+  /* ---- Layout tokens ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --content-width: 880px;
+  --focus-ring: 0 0 0 3px rgba(182, 156, 255, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--ink-950);
+  color: var(--paper);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: var(--gold-strong); }
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ============================================================
+   Formula (landing) page
+   ============================================================ */
+
+.formula-page {
+  /* One soft glow at the top over a plain dark base. Nothing else. */
+  background-color: var(--ink-950);
+  background-image: radial-gradient(70% 38% at 50% 0%, var(--glow-a), transparent 72%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.formula-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 18px 20px 0;
+}
+
+.app-mark {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pill-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--ink-line-strong);
+  color: var(--paper-dim);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+}
+
+.pill-button:hover {
+  border-color: var(--gold);
+  color: var(--paper);
+  background: var(--gold-soft);
+}
+
+.formula-hero {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 56px 20px 28px;
+}
+
+.formula-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  line-height: 1.15;
+  margin: 0 0 12px;
+  max-width: 18ch;
+}
+
+.formula-hero p {
+  color: var(--paper-dim);
+  font-size: 1.02rem;
+  max-width: 46ch;
+  margin: 0;
+}
+
+.formula-grid {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 8px 20px 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 620px) {
+  .formula-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 960px) {
+  .formula-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.formula-card {
+  background: var(--ink-900);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius-md);
+  padding: 22px 20px;
+  text-align: left;
+  color: inherit;
+  width: 100%;
+  transition: border-color 180ms ease, background-color 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.formula-card:hover {
+  border-color: var(--ink-line-strong);
+}
+
+.formula-card[aria-expanded="true"] {
+  background: var(--ink-850);
+  border-color: var(--gold);
+}
+
+.formula-card .formula-expr {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+}
+
+.formula-card .formula-tap-hint {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--paper-faint);
+}
+
+.formula-card .formula-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+.formula-card[aria-expanded="true"] .formula-detail {
+  grid-template-rows: 1fr;
+}
+
+.formula-card .formula-detail-inner {
+  overflow: hidden;
+}
+
+.formula-card[aria-expanded="true"] .formula-detail-inner {
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--ink-line);
+}
+
+.formula-card .formula-expansion {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--gold-strong);
+  margin: 0 0 8px;
+}
+
+.formula-card .formula-explain {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--paper-dim);
+}
+
+/* Easter-egg unlock feedback: a quiet glow + scale, not a flashy reveal.
+   Only ever applied to the one card the JS designates, and only after the
+   second tap — it never runs on ordinary single taps. */
+.formula-card.pv-unlocking {
+  animation: pv-unlock 620ms ease forwards;
+}
+
+@keyframes pv-unlock {
+  0% { box-shadow: 0 0 0 0 var(--teal-soft); border-color: var(--gold); }
+  60% { box-shadow: 0 0 0 14px transparent; border-color: var(--teal); }
+  100% { box-shadow: 0 0 0 0 transparent; border-color: var(--teal); opacity: 0.55; }
+}
+
+/* Formula hint block */
+.formula-hint {
+  max-width: var(--content-width);
+  margin: 8px auto 48px;
+  padding: 0 20px;
+}
+
+.formula-hint-card {
+  border: 1px dashed var(--ink-line-strong);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  color: var(--paper-faint);
+}
+
+.formula-hint-card h2 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+  color: var(--paper-dim);
+}
+
+.formula-hint-card p {
+  margin: 0;
+  font-size: 0.86rem;
+  white-space: pre-line;
+  line-height: 1.7;
+}
+
+.formula-footer {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  color: var(--paper-faint);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ============================================================
+   Help modal (dialog) — shared component
+   ============================================================ */
+
+.pv-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 9, 15, 0.66);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  z-index: 60;
+}
+
+@media (min-width: 620px) {
+  .pv-dialog-backdrop {
+    align-items: center;
+    padding: 20px;
+  }
+}
+
+.pv-dialog {
+  background: var(--ink-900);
+  border: 1px solid var(--ink-line-strong);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  max-width: 480px;
+  width: 100%;
+  padding: 24px 22px 22px;
+  color: var(--paper);
+}
+
+@media (min-width: 620px) {
+  .pv-dialog { border-radius: var(--radius-md); }
+}
+
+.pv-dialog h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  margin: 0 0 12px;
+}
+
+.pv-dialog p {
+  color: var(--paper-dim);
+  font-size: 0.94rem;
+  margin: 0 0 20px;
+}
+
+.pv-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--ink-950);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background-color 160ms ease;
+}
+
+.btn-primary:hover { background: var(--gold-strong); }
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--paper-dim);
+  border: 1px solid var(--ink-line-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold);
+  color: var(--paper);
+}
+
+/* ============================================================
+   Dashboard page
+   ============================================================ */
+
+.dashboard-page { min-height: 100vh; }
+
+.dashboard-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 18px 20px 0;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+  border: 1px solid var(--ink-line);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.dashboard-main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 40px 20px 24px;
+}
+
+.dashboard-greeting {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+}
+
+.dashboard-username {
+  margin: 0 0 32px;
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 620px) {
+  .nav-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.nav-card {
+  display: block;
+  background: var(--ink-900);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 180ms ease;
+}
+
+.nav-card:hover { border-color: var(--gold); }
+
+.nav-card h2 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.02rem;
+  margin: 0 0 6px;
+}
+
+.nav-card p {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: 0.86rem;
+}
+
+.nav-card.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.nav-card .nav-card-badge {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 0.74rem;
+  color: var(--paper-faint);
+  border: 1px solid var(--ink-line);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Shared "pick list" pattern (friend/member pickers, checkbox rows) — used
+   by chat.html's new-conversation dialog, chat-room.html's group settings,
+   and profile.html's privacy toggles. */
+.pick-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pick-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--ink-line);
+  cursor: pointer;
+}
+
+.pick-row:hover { border-color: var(--ink-line-strong); }
+
+.pick-row input[type="checkbox"],
+.pick-row input[type="radio"] {
+  accent-color: var(--gold);
+  width: 16px;
+  height: 16px;
+}
+
+.pick-row-name { font-size: 0.9rem; }
+
+.new-dialog-empty {
+  color: var(--paper-faint);
+  font-size: 0.88rem;
+  padding: 16px 4px;
+  text-align: center;
+}
+
+.new-dialog-section-label {
+  margin-top: 14px;
+}
+
+/* Dashboard topbar actions & notification badge */
+.dashboard-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-pill-link {
+  text-decoration: none;
+  color: var(--paper-dim);
+}
+
+.notification-badge {
+  display: inline-block;
+  background: var(--rose);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  min-width: 1.1rem;
+  text-align: center;
+}
+
+.notification-badge[hidden] {
+  display: none !important;
+}
