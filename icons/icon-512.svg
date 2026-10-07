@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Solid Dark Background -->
+  <rect width="512" height="512" fill="#0a0713"/>
+  
+  <!-- Subtle Math Border Accent -->
+  <rect x="36" y="36" width="440" height="440" rx="72" fill="#120d20" stroke="#b69cff" stroke-width="4" stroke-opacity="0.35"/>
+  
+  <!-- Formula Group: a² − b² -->
+  <g fill="#b69cff" font-family="'JetBrains Mono', 'Courier New', monospace" font-weight="700">
+    <!-- Base text: a -->
+    <text x="96" y="298" font-size="140" letter-spacing="-2">a</text>
+    <!-- Superscript: 2 -->
+    <text x="182" y="218" font-size="76" fill="#d4c4ff">2</text>
+    
+    <!-- Minus sign: − -->
+    <text x="246" y="286" font-size="124" fill="#5ee7ff">−</text>
+    
+    <!-- Base text: b -->
+    <text x="330" y="298" font-size="140" letter-spacing="-2">b</text>
+    <!-- Superscript: 2 -->
+    <text x="416" y="218" font-size="76" fill="#d4c4ff">2</text>
+  </g>
+  
+  <!-- Subtle decorative dot -->
+  <circle cx="256" cy="386" r="7" fill="#b69cff" fill-opacity="0.6"/>
+</svg>
