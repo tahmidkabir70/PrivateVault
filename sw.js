@@ -1,10 +1,12 @@
-/* Private Vault — Service Worker v3
-   - No precache. Network-first for everything same-origin.
-   - Notification click routes to the correct page (chat if chatId
-     present, otherwise the dashboard).
-   - Push handler kept as a placeholder for the future. */
+/* Private Vault — Service Worker v5
+   Handles:
+     - install / activate: minimal, no precache
+     - fetch: network-first for same-origin, offline fallback for navigations
+     - push: wakes the SW even when the PWA is fully closed; showing a
+             notification is what makes Android put a red dot on the icon
+     - notificationclick: opens the app and lets the OS clear the dot */
 
-const CACHE_NAME = "pv-vault-v3";
+const CACHE_NAME = "pv-vault-v5";
 
 self.addEventListener("install", () => {
   self.skipWaiting();
@@ -27,11 +29,8 @@ self.addEventListener("fetch", (event) => {
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
-  // Cross-origin (Firebase, Cloudinary, Google Fonts, Giphy) go straight
-  // to the network. Never intercept them.
   if (url.origin !== self.location.origin) return;
 
-  // Page navigations: always network. Never serve cached HTML.
   if (req.mode === "navigate") {
     event.respondWith(
       fetch(req).catch(
@@ -45,7 +44,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Static files: network-first, cache as offline fallback.
   event.respondWith(
     fetch(req)
       .then((res) => {
@@ -59,38 +57,49 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// ---------- Push (placeholder for future server-side push) ----------
+/* ---------- PUSH ---------- */
+/* Fired by the OS push daemon (FCM on Android) even if the PWA is
+   completely closed and swiped away. Showing a notification here is the
+   ONLY way to make Android put a red dot on the installed PWA icon.
+   Do NOT call navigator.setAppBadge() here — it does not exist inside
+   a Service Worker, and it is not supported on Android Chrome anyway. */
 self.addEventListener("push", (event) => {
-  if (!event.data) return;
-  let title = "Private Vault";
-  let options = {
-    icon: "icons/icon-192.png",
-    badge: "icons/icon-192.png",
-    data: { url: "./vault-dashboard.html" },
+  let data = {
+    title: "বীজগণিতের সূত্রাবলি",
+    body: "নতুন সূত্র যোগ হয়েছে",
+    url: "./vault-dashboard.html",
   };
-  try {
-    const data = event.data.json();
-    title = data.title || title;
-    options.body = data.body || "নতুন সূত্র যোগ হয়েছে";
-    options.data = { url: data.url || "./vault-dashboard.html" };
-  } catch (e) {
-    options.body = event.data.text();
+
+  if (event.data) {
+    try {
+      const parsed = event.data.json();
+      if (parsed && typeof parsed === "object") {
+        data.title = parsed.title || data.title;
+        data.body = parsed.body || data.body;
+        data.url = parsed.url || data.url;
+      }
+    } catch (e) {
+      data.body = event.data.text() || data.body;
+    }
   }
-  event.waitUntil(self.registration.showNotification(title, options));
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: "icons/icon-192.png",
+      badge: "icons/icon-192.png",
+      tag: "pv-unread",
+      renotify: true,
+      data: { url: data.url },
+    })
+  );
 });
 
-// ---------- Notification click ----------
-// If the notification payload includes a chatId, route there. Otherwise
-// open (or focus) the dashboard. Either way, focus an existing app
-// window if one is open instead of spawning a duplicate.
+/* ---------- NOTIFICATION CLICK ---------- */
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
-  const data = event.notification.data || {};
-  const chatId = data.chatId || null;
-  const targetUrl = chatId
-    ? `./chat-room.html?chat=${encodeURIComponent(chatId)}`
-    : (data.url || "./vault-dashboard.html");
+  const targetUrl = (event.notification.data && event.notification.data.url) || "./vault-dashboard.html";
 
   event.waitUntil(
     self.clients
@@ -98,10 +107,7 @@ self.addEventListener("notificationclick", (event) => {
       .then((list) => {
         for (const client of list) {
           if (client.url.startsWith(self.location.origin) && "focus" in client) {
-            // Navigate the focused window to the target, then focus.
-            if ("navigate" in client) {
-              client.navigate(targetUrl).catch(() => {});
-            }
+            if ("navigate" in client) client.navigate(targetUrl).catch(() => {});
             return client.focus();
           }
         }
@@ -112,8 +118,8 @@ self.addEventListener("notificationclick", (event) => {
   );
 });
 
-// ---------- Notification close (no-op but explicit) ----------
+/* ---------- NOTIFICATION CLOSE ---------- */
 self.addEventListener("notificationclose", () => {
-  // Nothing to do — closing the notification is handled by the OS,
-  // which also removes the red dot if this was the last unread one.
+  // No-op. Closing is handled by the OS, which also removes the red dot
+  // if this was the last unread notification.
 });

@@ -653,6 +653,13 @@ export async function createGroupChat({ name, memberUids, creatorUid }) {
 /**
  * Sends a message into a chat (text and/or an attachment/GIF) and updates
  * the chat's last-message preview in the same multi-path write.
+ *
+ * Additionally enqueues a push job under pendingPush/{recipientUid} for
+ * every other member of the chat. A Cloudflare Worker watches that node
+ * and delivers a Web Push payload, which wakes the service worker even
+ * when the PWA is fully closed — that is what puts a red dot on the
+ * installed PWA icon on Android.
+ *
  * @param {string} chatId - Chat identifier.
  * @param {string} senderId - Sender's uid.
  * @param {string} text - Message text (may be empty when an attachment is present).
@@ -688,6 +695,35 @@ export async function sendMessage(chatId, senderId, text, replyTo = null, attach
   } catch {
     throw keyedError("err_message_failed");
   }
+
+  // ---- Enqueue push notification jobs for the other chat members ----
+  // This is what makes the red dot appear even when the browser is fully
+  // closed: the Cloudflare Worker reads pendingPush/{uid} on a schedule
+  // and delivers a Web Push message that wakes the service worker.
+  // A failure here must NEVER break message delivery, so it is wrapped
+  // in its own try/catch and swallowed on error.
+  try {
+    const chatSnap = await get(ref(database, `chats/${chatId}`));
+    if (chatSnap.exists()) {
+      const chat = chatSnap.val();
+      const memberIds = chat.memberIds || {};
+      const recipients = Object.keys(memberIds).filter((uid) => uid !== senderId);
+      if (recipients.length > 0) {
+        const pushUpdates = {};
+        recipients.forEach((uid) => {
+          pushUpdates[`pendingPush/${uid}/${messageId}`] = {
+            type: "message",
+            chatId,
+            createdAt: timestamp,
+          };
+        });
+        await update(ref(database), pushUpdates);
+      }
+    }
+  } catch (e) {
+    // Push enqueue failure is non-fatal for messaging.
+  }
+
   return messageId;
 }
 
