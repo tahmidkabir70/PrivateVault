@@ -89,17 +89,20 @@
     document.head.appendChild(link);
   }
 
-  // Register the service worker. Only runs on secure origins (https or
-  // localhost), which is exactly where PWA installability is required.
+  // Register the service worker with an explicit scope so Chrome can
+  // verify that the SW controls the whole PWA. Only runs on secure
+  // origins (https or localhost), which is where installability applies.
   function registerServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
     if (location.protocol !== "https:" && location.hostname !== "localhost") return;
 
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function (err) {
-        // Registration failure must never break the page — log only.
-        console.warn("[PWA] Service worker registration failed:", err);
-      });
+      navigator.serviceWorker
+        .register("sw.js", { scope: "./" })
+        .catch(function (err) {
+          // Registration failure must never break the page — log only.
+          console.warn("[PWA] Service worker registration failed:", err);
+        });
     });
   }
 
