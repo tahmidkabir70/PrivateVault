@@ -8,7 +8,7 @@ import { database } from "./firebase.js";
 import { ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 // Replace this with your real VAPID public key (see setup notes).
-const VAPID_PUBLIC_KEY = "REPLACE_WITH_YOUR_VAPID_PUBLIC_KEY";
+const VAPID_PUBLIC_KEY = "BJYv6bJTZ8CRdO-eqocpDpPWFoSkBHfnl6Jn24enPHTuIfzJlQSXu83y7UkUdyUDGYOOqiKvlYyTcXhCkYRXKyY";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
