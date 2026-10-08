@@ -3,7 +3,9 @@
    2. Register manifest + service worker.
    3. After the vault is unlocked, subscribe to push notifications so
       the Cloudflare Worker can reach this device even when the app is
-      fully closed. On the cover page, nothing push-related runs. */
+      fully closed. On the cover page, nothing push-related runs.
+   4. When the app is opened, close delivered notifications so the red
+      dot on the Android icon goes away. */
 (function() {
   "use strict";
   
@@ -130,6 +132,26 @@
       console.warn("[push] module load failed:", err);
     });
   }
+  
+  /* ---------- 4. Clear delivered notifications when the app is opened ---------- */
+  /* The red dot on the Android icon stays as long as a notification is in
+     the tray. Closing them when the app is visible removes the dot. */
+  function clearDeliveredNotifications() {
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.ready
+      .then(function(reg) {
+        if (!reg.getNotifications) return;
+        return reg.getNotifications().then(function(list) {
+          list.forEach(function(n) { n.close(); });
+        });
+      })
+      .catch(function() {});
+  }
+  
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible") clearDeliveredNotifications();
+  });
+  window.addEventListener("pageshow", clearDeliveredNotifications);
   
   ensureManifestLink();
   registerServiceWorker();
