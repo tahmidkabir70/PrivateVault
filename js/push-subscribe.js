@@ -1,19 +1,16 @@
 // ===== Private Vault — push-subscribe.js =====
-// Asks for notification permission, creates a fresh PushSubscription with the
-// VAPID public key, and stores it in Firebase RTDB under
-// users/{uid}/pushSubscriptions/{key}. The Cloudflare Worker reads these
-// subscriptions and delivers Web Push messages to them.
-// Also writes a small status record to users/{uid}/pushStatus so problems
-// can be read from the Firebase console (no DevTools needed).
+// Asks for notification permission, reuses the browser's existing
+// PushSubscription (or creates one with the VAPID public key) and stores it in
+// Firebase RTDB under users/{uid}/pushSubscriptions/{key}.
+// NOTE: one browser profile has ONE push subscription per site. The installed
+// app and a Chrome tab on the same phone share it, so it must never be
+// unsubscribed just because a new session started.
+// A status record is written to users/{uid}/pushStatus for easy debugging.
 
 import { database } from "./firebase.js";
-import { ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const VAPID_PUBLIC_KEY = "BJYv6bJTZ8CRdO-eqocpDpPWFoSkBHfnl6Jn24enPHTuIfzJlQSXu83y7UkUdyUDGYOOqiKvlYyTcXhCkYRXKyY";
-
-// Once per browser session we drop the old local subscription and make a new
-// one, so a stale/dead subscription can never be reused.
-const FRESH_FLAG = "pv_push_fresh_v1";
 
 let inflight = null;
 
@@ -40,6 +37,22 @@ function isStandalone() {
     );
   } catch (e) {
     return false;
+  }
+}
+
+function sameServerKey(subscription) {
+  try {
+    const current = subscription.options && subscription.options.applicationServerKey;
+    if (!current) return true; // cannot compare, assume fine
+    const a = new Uint8Array(current);
+    const b = urlBase64ToUint8Array(VAPID_PUBLIC_KEY);
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  } catch (e) {
+    return true;
   }
 }
 
@@ -73,18 +86,17 @@ async function doSubscribe(uid) {
     
     const reg = await navigator.serviceWorker.ready;
     let subscription = await reg.pushManager.getSubscription();
+    let reused = !!subscription;
     
-    let alreadyFresh = false;
-    try {
-      alreadyFresh = sessionStorage.getItem(FRESH_FLAG) === "1";
-      sessionStorage.setItem(FRESH_FLAG, "1");
-    } catch (e) {}
-    
-    let oldKey = null;
-    if (subscription && !alreadyFresh) {
-      oldKey = keyFromEndpoint(subscription.toJSON().endpoint);
-      await subscription.unsubscribe().catch(() => {});
-      subscription = null;
+    // Only replace a subscription that is expired or made with another key.
+    if (subscription) {
+      const expired =
+        subscription.expirationTime && subscription.expirationTime < Date.now();
+      if (expired || !sameServerKey(subscription)) {
+        await subscription.unsubscribe().catch(() => {});
+        subscription = null;
+        reused = false;
+      }
     }
     
     if (!subscription) {
@@ -103,14 +115,9 @@ async function doSubscribe(uid) {
       createdAt: Date.now(),
     });
     
-    if (oldKey && oldKey !== key) {
-      await remove(ref(database, `users/${uid}/pushSubscriptions/${oldKey}`)).catch(() => {});
-    }
-    
-    await reportStatus(uid, { state: "subscribed", key });
+    await reportStatus(uid, { state: "subscribed", key, reused });
     return subscription;
   } catch (err) {
-    try { sessionStorage.removeItem(FRESH_FLAG); } catch (e) {}
     await reportStatus(uid, {
       state: "error",
       message: String((err && err.message) || err).slice(0, 200),

@@ -4,8 +4,8 @@
    3. After the vault is unlocked, subscribe to push notifications so
       the Cloudflare Worker can reach this device even when the app is
       fully closed. On the cover page, nothing push-related runs.
-   4. When the INSTALLED app is opened, close delivered notifications so
-      the red dot on the Android icon goes away. Browser tabs never do this. */
+   4. When the app is opened, close delivered notifications so the red
+      dot on the Android icon goes away. */
 (function() {
   "use strict";
   
@@ -136,7 +136,8 @@
   /* ---------- 4. Clear delivered notifications (installed app only) ---------- */
   /* The red dot on the Android icon stays as long as a notification is in
      the tray. When the installed app is opened, close them so the dot goes.
-     Normal browser tabs on the same site must NOT do this. */
+     Done twice for safety: the service worker closes them, and the page
+     closes them directly. Normal browser tabs must NOT do this. */
   function isInstalledApp() {
     try {
       return (
@@ -153,6 +154,9 @@
     if (!("serviceWorker" in navigator)) return;
     navigator.serviceWorker.ready
       .then(function(reg) {
+        if (reg.active) {
+          reg.active.postMessage({ type: "pv-clear-notifications" });
+        }
         if (!reg.getNotifications) return;
         return reg.getNotifications().then(function(list) {
           list.forEach(function(n) { n.close(); });
@@ -161,10 +165,16 @@
       .catch(function() {});
   }
   
+  function clearNowAndAgain() {
+    clearDeliveredNotifications();
+    setTimeout(clearDeliveredNotifications, 1500);
+  }
+  
   document.addEventListener("visibilitychange", function() {
-    if (document.visibilityState === "visible") clearDeliveredNotifications();
+    if (document.visibilityState === "visible") clearNowAndAgain();
   });
-  window.addEventListener("pageshow", clearDeliveredNotifications);
+  window.addEventListener("pageshow", clearNowAndAgain);
+  window.addEventListener("load", clearNowAndAgain);
   
   ensureManifestLink();
   registerServiceWorker();

@@ -118,6 +118,20 @@ self.addEventListener("notificationclick", (event) => {
   );
 });
 
+/* ---------- CLEAR ON REQUEST ---------- */
+/* The page asks us to close every delivered notification when the installed
+   app is opened, which also removes the red dot from the icon. */
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "pv-clear-notifications") {
+    event.waitUntil(
+      self.registration
+        .getNotifications()
+        .then((list) => list.forEach((n) => n.close()))
+        .catch(() => {})
+    );
+  }
+});
+
 /* ---------- NOTIFICATION CLOSE ---------- */
 self.addEventListener("notificationclose", () => {
   // No-op. Closing is handled by the OS, which also removes the red dot
