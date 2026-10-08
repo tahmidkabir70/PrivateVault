@@ -4,8 +4,8 @@
    3. After the vault is unlocked, subscribe to push notifications so
       the Cloudflare Worker can reach this device even when the app is
       fully closed. On the cover page, nothing push-related runs.
-   4. When the app is opened, close delivered notifications so the red
-      dot on the Android icon goes away. */
+   4. When the INSTALLED app is opened, close delivered notifications so
+      the red dot on the Android icon goes away. Browser tabs never do this. */
 (function() {
   "use strict";
   
@@ -133,10 +133,23 @@
     });
   }
   
-  /* ---------- 4. Clear delivered notifications when the app is opened ---------- */
+  /* ---------- 4. Clear delivered notifications (installed app only) ---------- */
   /* The red dot on the Android icon stays as long as a notification is in
-     the tray. Closing them when the app is visible removes the dot. */
+     the tray. When the installed app is opened, close them so the dot goes.
+     Normal browser tabs on the same site must NOT do this. */
+  function isInstalledApp() {
+    try {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+  
   function clearDeliveredNotifications() {
+    if (!isInstalledApp()) return;
     if (!("serviceWorker" in navigator)) return;
     navigator.serviceWorker.ready
       .then(function(reg) {
